@@ -25,26 +25,43 @@
         <h3>
 <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
 
-<p>As part of the ENPH 253 course, Introduction to Instrument design at UBC, I was part of an team that created an autonomous tape following robot car. The course is taken in the summer of 2nd year to introduce young engineers to the various aspects of instrument design, from mechanical to electrical to software. The content of the class always remains the same, but the end final project changes from year to year. For my year it was chosen that we build an autonomous robot to race around a track. The common theme throughout all the final projects is that the robots must be autonomous. My team included Russell Vanderhout, Adrien Emery, and <a href=http://dllu.net>Daniel Lu]</a></p>
+<p>As part of the ENPH 253 course, Introduction to Instrument design at UBC, I was part of an team that created an autonomous tape following robot car. The course is taken in the summer of 2nd year to introduce young engineers to the various aspects of instrument design, from mechanical to electrical to software. The content of the class always remains the same, but the end final project changes from year to year. For my year it was chosen that we build an autonomous robot to race around a track. The common theme throughout all the final projects is that the robots must be autonomous. My team included Russell Vanderhout, Adrien Emery, and <a href=http://dllu.net>Daniel Lu</a></p>
 <h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a> Mechanical Design</h3>
+<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a> Mechanical </h3>
 
 <p>The first aspect of the robot is the chassis. Learning how to design for waterjet cutting in Solidworks was the first step in creating the outershell for the robot. Made from sheet metal, the unibody chassis is designed in Solidworks then folded into place. Many other teams opted to design several different parts and then screw them together, or weld them together. The major skill learned is to design something quickly to see where the problems lie. Our chassis design ran through 6 iterations before we finally figured out what worked and what didn't. There was not enough time to model out every component to see what would fit into the chassis, so it was much quicker to design and then put parts in to see what worked. For the final chassis, we powder coated the metal red. </p>
 
-<p> For our drivetrain, we chose to use two electric motors mated to a 13-tooth sprocket driving a differential gear via timing belt. This drivetrain design was done by Daniel, who is quite the car enthusiast. The gearing for the differential was laser cut out of acrylic. This was our first foray into mechanical gears and design, and it was a success although we did not come back into this topic until upper year mechanical design classes. </p>
+<p> For our drivetrain, we chose to use two electric motors mated to a 13-tooth sprocket driving a differential gear via timing belt. This drivetrain design was done by Daniel, who is quite the car enthusiast. The gearing for the differential was laser cut out of acrylic. This was our first foray into mechanical gears and design, and it was a success although we did not come back into this topic until upper year mechanical design classes. The steering design was chosen to be done using a servo motor linked to the front wheels via gauge steel. We were taught about the Ackermann steering geometry and it was implemented in our steering. An important note is that the performence of the servo motor greatly affected the performance of the steering; a faster servo meant faster steering.</p>
+
+<p>Another piece of engineering fun were the wheels designed by Daniel. Instead of using standard steels off the shelf, he decided to design both the wheels and tires for the robot. The wheels were laser cut from polycarbonate and the tires were cut from rubber. The wheels were inspired by the Lamborghini Countach five porthole design, and the tires were made to be similar to the Michelin Tweel to improve ground contact. </p>
 
 <h3>
-<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating pages manually</h3>
+<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span class="octicon octicon-link"></span></a>Electrical</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>In order to detect the black tape on the white track surface, the sensors we chose to use were QRD1114 sensors. The analog sensors use diodes to detect emitted infrared reflections. Using these sensors we are able to "scan" the ground to follow the black tape. An array of 8 QRD sensors in order to gain a higher resolution of the black tape, and the signal is then fed into a comparator circuit to set the threshold value. Using 8 QRD sensors allows for easier software programming to smoothly steer along the black tape. All the electrical circuits stem back to the main TINAH board we used, which has an ATMega 128 as the processor. </p>
 
-<h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor’s GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>Since the race track will feature obstacles and another robot, there is the chance that two cars might run into each other in the same lane. To prevent this, we chose to use an IR rangefinder to detect obstacles infront of Gadget. This circuit is very straightforward and consisted of the analog rangefinder and a comparator circuit to set the threshold via a potentiometer. Another option would have been to use software to set the threshold but we did not chose that route. Using a rangefinder, we can then receive a HIGH or LOW signal depending on if there is an obstacle at a certain distance away from the front of the car. In order to filter out extraneous signals, we ran the rangefinder signal through a low pass filter first. And to furthur reduce noise, we built an enclosure around the rangerfinder to block off signals from above, and to focus the IR forward. </p> 
 
 <h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Software</h3>
+
+<p>The code that makes Gadget run is written in the Wiring programming language for the custom TINAH board. The TINAH board is very similar to the more well known Arduino systems. In order to follow the tape accurately without constantly overshooting, the tape following algorithm consisted of two simple states. 
+<ul>
+  <li>The first state uses all 8 QRD sensors to detect the tape. Once the tape is detected, it enters into the next 2 sensor state.</li>
+  <li> In the two sensor state the leftmost or rightmost sensor that deteced the tape first is set as the reference sensor. And then using only two sensors, we know that the tape track will move either left or right from that sensor depending on the analog value recieved by the QRD.</li>
+</ul>
+As more tape is sensed by the QRD, the reference sensor is shifted and the task repeated until both sensors detect the tape. The threshold value is set such that two sensors detecting tape results in straight motion. If nothing is detected in the two sensors, it shifts back to using 8 sensors.</p>
+
+<p> For each iteration of the QRD scan, an instruction is sent to the steering servo motor. Using a lookup table, we devised 15 angles at which the sensor readings corresponded to the sensor array. This is essentially using proportional control for the steering based off the QRD sensors. 
+</p>
+
+<p> The lane changing aspect of the software consisted of tracking which lane Gadget is in, and then executing a lane changing algorithm when needed. The steering algorithm consists of setting the servo motor to steer at a certain angle, waiting for all 8 sensors to detect no tape, then steer straight until the sensor farthest away from the lane-to-be-changed-into tape is detecting the tape. This allows for an overshoot before smoothly going back into the tape following algorithm</p>
+
+<p> In order to control the power of the motor, we had the PWM duty cycle be around 70% in order to not go too fast. Sadly we were not able to optimize our robot to go fast and perform reliability until the time constraints we had. Often going at 100% would result in our steering mechanism not being able to respond fast enough to the course, and ended up oscillation around the tape. Another consideration was to slow down the motor around steeper corners in order to prevent skidding out. If the angle of steering exceeds a certain threshold then the robot slows down into the corner before accelerating again.</p>
+
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Results</h3>
 
 <p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
       </section>
