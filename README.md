@@ -1,3 +1,3 @@
 # gadget-the-tape-follower
 Fully autonomous tape following robot
-yup
+project page for gadget
