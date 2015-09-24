@@ -29,6 +29,8 @@
 <h3>
 <a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a> Mechanical </h3>
 
+<img src="https://c1.staticflickr.com/5/4100/4769861871_f11d3e86ca.jpg">
+
 <p>The first aspect of the robot is the chassis. Learning how to design for waterjet cutting in Solidworks was the first step in creating the outershell for the robot. Made from sheet metal, the unibody chassis is designed in Solidworks then folded into place. Many other teams opted to design several different parts and then screw them together, or weld them together. The major skill learned is to design something quickly to see where the problems lie. Our chassis design ran through 6 iterations before we finally figured out what worked and what didn't. There was not enough time to model out every component to see what would fit into the chassis, so it was much quicker to design and then put parts in to see what worked. For the final chassis, we powder coated the metal red. </p>
 
 <p> For our drivetrain, we chose to use two electric motors mated to a 13-tooth sprocket driving a differential gear via timing belt. This drivetrain design was done by Daniel, who is quite the car enthusiast. The gearing for the differential was laser cut out of acrylic. This was our first foray into mechanical gears and design, and it was a success although we did not come back into this topic until upper year mechanical design classes. The steering design was chosen to be done using a servo motor linked to the front wheels via gauge steel. We were taught about the Ackermann steering geometry and it was implemented in our steering. An important note is that the performence of the servo motor greatly affected the performance of the steering; a faster servo meant faster steering.</p>
@@ -37,6 +39,8 @@
 
 <h3>
 <a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span class="octicon octicon-link"></span></a>Electrical</h3>
+
+<img src="https://c1.staticflickr.com/5/4117/4769853601_7faa8b3e68.jpg">
 
 <p>In order to detect the black tape on the white track surface, the sensors we chose to use were QRD1114 sensors. The analog sensors use diodes to detect emitted infrared reflections. Using these sensors we are able to "scan" the ground to follow the black tape. An array of 8 QRD sensors in order to gain a higher resolution of the black tape, and the signal is then fed into a comparator circuit to set the threshold value. Using 8 QRD sensors allows for easier software programming to smoothly steer along the black tape. All the electrical circuits stem back to the main TINAH board we used, which has an ATMega 128 as the processor. </p>
 
@@ -51,6 +55,8 @@
   <li> In the two sensor state the leftmost or rightmost sensor that deteced the tape first is set as the reference sensor. And then using only two sensors, we know that the tape track will move either left or right from that sensor depending on the analog value recieved by the QRD.</li>
 </ul>
 As more tape is sensed by the QRD, the reference sensor is shifted and the task repeated until both sensors detect the tape. The threshold value is set such that two sensors detecting tape results in straight motion. If nothing is detected in the two sensors, it shifts back to using 8 sensors.</p>
+
+<img src="https://c1.staticflickr.com/5/4094/4822723601_abf4d434b2.jpg">
 
 <p> For each iteration of the QRD scan, an instruction is sent to the steering servo motor. Using a lookup table, we devised 15 angles at which the sensor readings corresponded to the sensor array. This is essentially using proportional control for the steering based off the QRD sensors. 
 </p>
